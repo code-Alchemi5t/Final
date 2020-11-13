@@ -1,0 +1,174 @@
+
+<!--{% load static %}-->
+<!--{% block head %}-->
+<!--  <head>-->
+<!--    <meta charset="UTF-8"><link rel="stylesheet"-->
+<!--    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"-->
+<!--    crossorigin="anonymous">-->
+
+<!--<link rel="stylesheet"-->
+<!--    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap-theme.min.css"-->
+<!--    crossorigin="anonymous">-->
+
+<!--<link rel="stylesheet"-->
+<!--    href="https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css"-->
+<!--     crossorigin="anonymous">-->
+
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"-->
+<!--    crossorigin="anonymous"></script>-->
+
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"-->
+<!--    crossorigin="anonymous"></script>-->
+
+<!--<script-->
+<!--  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"-->
+<!--  crossorigin="anonymous"></script>-->
+
+<!--    <link rel="shortcut icon" href="{% static '/favicon.ico' %}" />-->
+<!--  </head>-->
+<!--  {% endblock %}-->
+<!--{% load crispy_forms_tags %}-->
+<!--<h1>Home Page</h1>-->
+<!--<ul>-->
+<!--    <li>-->
+<!--        <a href="{% url 'bookings:all' %}">Booking</a>-->
+<!--    </li>-->
+<!--    <li>-->
+<!--        <a href="{% url 'home:booking' %}">New Booking</a>-->
+<!--    </li>-->
+<!--    <li>-->
+<!--        {% if user.is_authenticated %}-->
+<!--        <a href="{% url 'logout' %}?next={% url 'home:all' %}">Logout</a> / <a href="{% url 'user:profile_update' %}">Profile</a> / <a href="{% url 'user:password_change' %}">Password Change</a>-->
+<!--        {% else %}-->
+<!--        <a href="{% url 'login' %}?next={% url 'home:all' %}">Login</a> / <a href="{% url 'user:all' %}?next={% url 'home:all' %}">Register</a>-->
+<!--        {% endif %}-->
+<!--    </li>-->
+<!--</ul>-->
+{% load static %}
+{% static "images" as baseUrl%}
+<!DOCTYPE html>
+<html lang="en" style="overflow-x: hidden">
+
+<head>
+    <title>S&T Travels</title>
+    <link rel="icon" href="{%static 'images/apple-touch-icon.png' %}" type="image/png" sizes="16x16">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
+    <link href="{% static 'plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/main_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/responsive.css' %}">
+</head>
+
+<body>
+
+    <div class="super_container">
+        <div class="home" style="height: 400px;">
+                        <div class="background_image">
+                            <img src="{%static 'images/plain.jpg' %}">
+                        </div>
+                        <div class="home_slider_content_container">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="logo" style="top:-50px; left: -510px"><a
+                                                href="{% url 'home:all' %}">S&T Travels</a>
+                                        </div>
+                                        <nav class="main_nav" style="margin-top: -80px; margin-left: 250px">
+                                            <ul class="d-flex flex-row align-items-start justify-content-start">
+                                                <li><a href="{% url 'home:all' %}">Home</a></li>
+                                                <li><a href="{% url 'home:booking' %}">Book Tickets</a></li>
+                                                {% if user.is_authenticated %}
+                                                <li><a href="{% url 'bookings:all' %}">Bookings</a></li>
+                                                <li><a href="{% url 'user:profile_update' %}">Profile</a></li>
+                                                <li><a href="{% url 'user:password_change' %}">Password Change</a></li>
+                                                <li><a href="{% url 'logout' %}?next={% url 'home:all' %}">Logout</a></li>
+                                                {% else %}
+                                                <li><a href="{% url 'user:all' %}?next={% url 'home:all' %}">Register</a></li>
+                                                <li><a href="{% url 'login' %}?next={% url 'home:all' %}">Login</a></li>
+                                                {% endif%}
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="home_slider_content_container">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="home_slider_content">
+                                            <div class="home_title" style="top: 60px;">
+                                                <h2>Let us take you away</h2>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        </div>
+
+        <div class="destinations" id="destinations" style="padding-top: 50px;
+	padding-bottom: 50px;">
+            <div class="container">
+                <div class="section_title" style="left: 400px">
+                    <h2>Popular Destinations</h2>
+                </div>
+                <div class="row destinations_row">
+                    <div class="col">
+                        <div class="destinations_container item_grid">
+                            <!-- Destination -->
+                            {% for dest in dests %}
+                            <div class="destination item">
+                                <div class="destination_image">
+                                    <img src="{{dest.img.url}}" alt="">
+                                    {% if dest.offer %}
+                                    <div class="spec_offer text-center"><a href="#">Special Offer</a></div>
+                                    {% endif %}
+                                </div>
+                                <div class="destination_content">
+                                    <div class="destination_title"><a href="destinations.html">{{dest.name}}</a></div>
+                                    <div class="destination_subtitle">
+                                        <p>{{dest.desc}}</p>
+                                    </div>
+                                    <div class="destination_price">From ${{dest.price}}</div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer" >
+        <div class="background_image">
+            <img src="{%static 'images/plain.jpg' %}" style="width: 1900px; height: 350px">
+        </div>
+        <div class="footer_contact_title" style="left: 650px; margin-top: -80px"> Contact Us</div>
+        <div class="footer_contact_list" style="margin-top: 120px;left: 400px;">
+            <ul>
+                <li>Sobi Jain: +91 7879626282</li>
+                <li>Room no. 100, SC Dey Hostel, IIT BHU, Varanasi.</li>
+                <li>sobi.jain.cse19@gmail.com</li>
+            </ul>
+        </div>
+        <div class="footer_contact_list" style="margin-top: -98px; left: 900px;">
+            <ul>
+                <li>Tejas Solanki: +91 8269817565</li>
+                <li>Room no. 426, Aryabhatta Hostel, IIT BHU, Varanasi.</li>
+                <li>tejas.solanki.cse19@gmail.com</li>
+            </ul>
+        </div>
+        <br><br><br><br><br><br><br><br>
+    </footer>
+    </div>
+    <script src="{% static 'styles/bootstrap4/popper.js' %}"></script>
+    <script src="{% static 'styles/bootstrap4/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/custom.js' %}"></script>
+
+</body>
+
+</html>

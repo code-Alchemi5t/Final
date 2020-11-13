@@ -1,0 +1,142 @@
+ <link rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"
+    crossorigin="anonymous">
+
+<link rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap-theme.min.css"
+    crossorigin="anonymous">
+
+<link rel="stylesheet"
+    href="https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css"
+     crossorigin="anonymous">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+    crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"
+    crossorigin="anonymous"></script>
+
+<script
+  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+  crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/v4-shims.css"><script>
+  $(function() {
+    $( "#id_date" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      yearRange: "2020:2022",
+      // You can put more options here.
+
+    });
+  });
+  </script>
+  <style>.ui-datepicker .ui-datepicker-title select {
+    color: #000;
+
+}</style>
+
+ <!--<link rel="stylesheet"-->
+<!--    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"-->
+<!--    crossorigin="anonymous">-->
+
+<!--<link rel="stylesheet"-->
+<!--    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap-theme.min.css"-->
+<!--    crossorigin="anonymous">-->
+
+<!--<link rel="stylesheet"-->
+<!--    href="https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css"-->
+<!--     crossorigin="anonymous">-->
+
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"-->
+<!--    crossorigin="anonymous"></script>-->
+
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"-->
+<!--    crossorigin="anonymous"></script>-->
+
+<!--<script-->
+<!--  src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"-->
+<!--  crossorigin="anonymous"></script>-->
+
+
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" style="overflow-y: hidden; overflow-x: hidden ">
+
+<head>
+    <title>Login</title>
+    <link rel="icon" href="{%static 'images/apple-touch-icon.png' %}" type="image/png" sizes="16x16">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap4/bootstrap.min.css' %}">
+    <link href="{% static 'plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/main_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/responsive.css' %}">
+</head>
+
+<body>
+
+    <div class="super_container">
+        <div class="home">
+            <div class="background_image">
+                <img src="{%static 'images/plain.jpg' %}">
+            </div>
+        </div>
+        <div class="home_search" style="top: -200px">
+            <div class="container">
+                <div class="row">
+                    <div class="logo" style="top: -500px;"><a href="{% url 'home:all' %}">S&T
+                            Travels</a></div>
+                    <nav class="main_nav" style="margin-left:100px">
+                        <ul>
+                            <li style="margin-left: 10px; top: -500px"><a href="{% url 'home:all' %}">Home</a></li>
+                            <li style="margin-left: 100px; top: -530px"><a href="{% url 'home:booking' %}">Book Tickets</a></li>
+                            {% if user.is_authenticated %}
+                            <li style="margin-left: 250px; top: -558px"><a href="{% url 'bookings:all' %}">Bookings</a></li>
+                            <li style="margin-left: 370px; top: -588px"><a href="{% url 'user:profile_update' %}">Profile</a></li>
+                            <li style="margin-left: 465px; top: -618px"><a href="{% url 'user:password_change' %}">Password Change</a></li>
+                            <li style="margin-left: 640px; top: -648px"><a href="{% url 'logout' %}?next={% url 'home:all' %}">Logout</a></li>
+                            {% else %}
+                            <li style="margin-left: 250px; top: -558px"><a href="{% url 'user:all' %}?next={% url 'home:all' %}">Register</a></li>
+                            <li style="margin-left: 370px; top: -585px"><a href="{% url 'login' %}?next={% url 'home:all' %}">Login</a></li>
+                            {% endif%}
+                        </ul>
+                    </nav>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="home_search_container"
+                            style="width: calc(50% + 122px); margin: -100px 100px 100px 300px">
+                            <div class="home_search_title">Login</div>
+                          {% load crispy_forms_tags %}
+                            <form method="post">{% csrf_token %}
+                                {{ form|crispy }}
+                                <input type="submit" value="Update">
+                            </form>
+<!--                            <form method="post" action="login" style="margin-top: 30px;">-->
+<!--                                {% csrf_token %}-->
+<!--                                <input type="text" class="search_input" placeholder="Username" required="required"-->
+<!--                                    style="width: 100%;">-->
+<!--                                <br><br>-->
+<!--                                <input type="password" class="search_input" placeholder="Password" required="required"-->
+<!--                                    style="width: 100%;">-->
+<!--                                <br><br>-->
+<!--                                <input type="submit" class="home_search_button" style="margin-left: 210px;">-->
+<!--                            </form>-->
+                            <div>
+<!--                                {% for msg in messages %}-->
+<!--                                    <h3 style="margin-left: 180px; color:black">{{msg}}</h3>-->
+<!--                                {% endfor %}-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
